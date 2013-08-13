@@ -1,26 +1,95 @@
 #!/bin/sh
 
-datestamp_foldername=$(date +%Y_%m_%d)-Nikon
-#echo $datestamp_foldername
+datestamp=$(date +%Y_%m_%d)
 
-cardfolder="/Volumes/cam/DCIM/101D7000"
+cardfolder="/Volumes/cam/DCIM/100SANYO"
 
 if [ -d $cardfolder ];then
-    echo "Okay, here we go..."  
-    echo "Here's what's on the memory stick:"
-    ls $cardfolder;
-    if [ -e /Users/justin/Pictures/$datestamp_foldername ];then 
-	  echo "Wait a minute! It looks like photodump was already run today."      
-	  echo "Try renaming today's earlier folder and running photodump again."
+    echo ""
+      printf '\e[36m'
+    echo "|-+-+-+-+-+-+-+-+-+-+-+-|"
+      # printf '\e[36m'
+    echo "|        PHOTODUMP      |"
+      # printf '\e[34m'
+    echo "|-+-+-+-+-+-+-+-+-+-+-+-|"
+    echo ""
+      printf '\e[31m'
+    echo "What do you want to call today's folder? (one word please)"  
+      printf '\e[32m'
+    read name
+      printf '\e[m'
+    foldername=$datestamp
+    foldername+="-"
+    foldername+=$name
+    # echo $foldername
+    echo ""
+    printf '\e[34m'
+    echo "- - - - - - - - - - - - - - - - - -"
+    # printf '\e[36m'
+    # echo "Here's what's on the memory stick:"
+      printf '\e[35m'
+    echo "Memory stick contents:"
+    # get number of files
+    filenumber=$(ls -1 $cardfolder | wc -l)
+    echo "Folder has" $filenumber "files."
+    du -sh $cardfolder;
+    printf '\e[34m'
+    echo "- - - - - - - - - - - - - - - - - -"
+    echo ""
+    # ls -la $cardfolder;
+    if [ -e /Users/username/Pictures/$foldername ];then 
+        printf '\e[31m'
+    echo "Wait a minute! It looks like you're about to overwrite a folder."      
+    echo "Try renaming today's earlier folder and running videodump again."
+        printf '\e[m'
     else
-      echo "Making today's folder in your Pictures directory..."
-      mkdir /Users/justin/Pictures/$datestamp_foldername
-      echo "/Users/justin/Pictures/$datestamp_foldername"
-      echo "Now moving all the files over!"
-	  echo "This could take a minute, so relax and have some coffee."
-      mv $cardfolder/*.* /Users/justin/Pictures/$datestamp_foldername
-      echo "All done! On to post..."
-      open /Users/justin/Pictures/$datestamp_foldername
+        printf '\e[36m'
+      echo "Ok, I'm going to wipe the memory stick clean,"
+      echo "and move everything to a folder named:"
+         printf '\e[m'
+      echo $foldername
+         printf '\e[31m'
+      echo ""   
+      echo "Continue? (y/n)"
+         printf '\e[32m'
+      read choice
+         printf '\e[31m'
+      case "$choice" in 
+        y|Y ) 
+         echo "Got it."
+         echo ""
+         printf '\e[m'
+          # main meat of the script
+              printf '\e[36m'
+          echo "Making the folder in your Pictures directory:"
+              printf '\e[m'
+          mkdir /Users/username/Pictures/$foldername
+          echo "/Users/username/Pictures/$foldername"
+              printf '\e[36m'
+          echo ""
+              printf '\e[35m'
+          echo "Now, just chill while I move the files..."
+              printf '\e[m'
+          cp -v $cardfolder/*.* /Users/username/Pictures/$foldername
+          rm $cardfolder/*.*
+              printf '\e[32m'
+          echo "Done! Onward."
+          echo ""
+              printf '\e[m'
+          open /Users/username/Pictures/$foldername
+          
+          # end case
+          ;;
+
+        n|N ) 
+          echo "Alright, exiting for now."
+          echo ""
+
+          # end case
+          ;;
+        
+        * ) echo "invalid";;
+      esac
     fi
  else printf '\e[31m' 
       echo "I can't find the memory stick I'm looking for."
