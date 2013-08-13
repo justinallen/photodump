@@ -2,9 +2,9 @@
 
 datestamp=$(date +%Y_%m_%d)
 
-cardfolder="/Volumes/cam/DCIM/100SANYO"
+memorystick="/Volumes/cam"
 
-if [ -d $cardfolder ];then
+if [ -d $memorystick ];then
     echo ""
       printf '\e[36m'
     echo "|-+-+-+-+-+-+-+-+-+-+-+-|"
@@ -13,6 +13,26 @@ if [ -d $cardfolder ];then
       # printf '\e[34m'
     echo "|-+-+-+-+-+-+-+-+-+-+-+-|"
     echo ""
+      printf '\e[31m'
+    echo "Here's the folders on the memory stick:"  
+      printf '\e[32m'
+
+    dirs=(/Volumes/CAM/DCIM/*)
+
+    read -p "$(
+          f=0
+          for dirname in "${dirs[@]}" ; do
+                  echo "$((++f)): $dirname"
+          done
+
+          echo 'Please select the folder to photodump: '
+    )" selection
+
+    selected_dir="${dirs[$((selection-1))]}"
+
+    echo "You picked: '$selected_dir'"
+    echo ""
+
       printf '\e[31m'
     echo "What do you want to call today's folder? (one word please)"  
       printf '\e[32m'
@@ -28,15 +48,14 @@ if [ -d $cardfolder ];then
     # printf '\e[36m'
     # echo "Here's what's on the memory stick:"
       printf '\e[35m'
-    echo "Memory stick contents:"
+    echo "Selected contents:"
     # get number of files
-    filenumber=$(ls -1 $cardfolder | wc -l)
+    filenumber=$(ls -1 $selected_dir | wc -l)
     echo "Folder has" $filenumber "files."
-    du -sh $cardfolder;
+    du -sh $selected_dir;
     printf '\e[34m'
     echo "- - - - - - - - - - - - - - - - - -"
     echo ""
-    # ls -la $cardfolder;
     if [ -e /Users/username/Pictures/$foldername ];then 
         printf '\e[31m'
     echo "Wait a minute! It looks like you're about to overwrite a folder."      
@@ -70,8 +89,8 @@ if [ -d $cardfolder ];then
               printf '\e[35m'
           echo "Now, just chill while I move the files..."
               printf '\e[m'
-          cp -v $cardfolder/*.* /Users/username/Pictures/$foldername
-          rm $cardfolder/*.*
+          cp -v $selected_dir/*.* /Users/username/Pictures/$foldername
+          rm $selected_dir/*.*
               printf '\e[32m'
           echo "Done! Onward."
           echo ""
