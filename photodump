@@ -1,0 +1,30 @@
+#!/bin/sh
+
+datestamp_foldername=$(date +%Y_%m_%d)-Nikon
+#echo $datestamp_foldername
+
+cardfolder="/Volumes/cam/DCIM/101D7000"
+
+if [ -d $cardfolder ];then
+    echo "Okay, here we go..."  
+    echo "Here's what's on the memory stick:"
+    ls $cardfolder;
+    if [ -e /Users/justin/Pictures/$datestamp_foldername ];then 
+	  echo "Wait a minute! It looks like photodump was already run today."      
+	  echo "Try renaming today's earlier folder and running photodump again."
+    else
+      echo "Making today's folder in your Pictures directory..."
+      mkdir /Users/justin/Pictures/$datestamp_foldername
+      echo "/Users/justin/Pictures/$datestamp_foldername"
+      echo "Now moving all the files over!"
+	  echo "This could take a minute, so relax and have some coffee."
+      mv $cardfolder/*.* /Users/justin/Pictures/$datestamp_foldername
+      echo "All done! On to post..."
+      open /Users/justin/Pictures/$datestamp_foldername
+    fi
+ else printf '\e[31m' 
+      echo "I can't find the memory stick I'm looking for."
+      printf '\e[m'
+fi
+
+
