@@ -5,7 +5,7 @@ Photodump - Bash Script for Rapid File Download From a Memory Stick
 
 Demo:
 
-[![photodump demo](https://github.com/justinallen/photodump/photodump-demo-screenshot.jpg)](https://vimeo.com/72318303)
+[![photodump demo](https://raw.github.com/justinallen/photodump/master/photodump-demo-screenshot.jpg)](https://vimeo.com/72318303)
 
 ---
 
