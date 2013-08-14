@@ -56,7 +56,7 @@ if [ -d $memorystick ];then
     printf '\e[34m'
     echo "- - - - - - - - - - - - - - - - - -"
     echo ""
-    if [ -e /Users/username/Pictures/$foldername ];then 
+    if [ -e ~/Pictures/$foldername ];then 
         printf '\e[31m'
     echo "Wait a minute! It looks like you're about to overwrite a folder."      
     echo "Try renaming today's earlier folder and running videodump again."
@@ -82,20 +82,20 @@ if [ -d $memorystick ];then
               printf '\e[36m'
           echo "Making the folder in your Pictures directory:"
               printf '\e[m'
-          mkdir /Users/username/Pictures/$foldername
-          echo "/Users/username/Pictures/$foldername"
+          mkdir ~/Pictures/$foldername
+          echo "/Pictures/$foldername"
               printf '\e[36m'
           echo ""
               printf '\e[35m'
           echo "Now, just chill while I move the files..."
               printf '\e[m'
-          cp -v $selected_dir/*.* /Users/username/Pictures/$foldername
+          cp -v $selected_dir/*.* ~/Pictures/$foldername
           rm $selected_dir/*.*
               printf '\e[32m'
           echo "Done! Onward."
           echo ""
               printf '\e[m'
-          open /Users/username/Pictures/$foldername
+          open ~/Pictures/$foldername
           
           # end case
           ;;
